@@ -39,7 +39,7 @@ function updateDisplayNumber () {
 
 let display = document.querySelector(".display");
 
-// create eventListeners for the number buttons
+// create eventListeners for the NUMBER buttons
 const nodeListNumber = document.querySelectorAll(".number");
 const numButtonsArr = Array.from(nodeListNumber).map( (button) => {
     button.addEventListener("click", () => {
