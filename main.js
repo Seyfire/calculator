@@ -48,6 +48,13 @@ const numButtonsArr = Array.from(nodeListNumber).map( (button) => {
     });
 });
 
+// eventListeners for the CLEAR button
+const clear = document.querySelector(".clear");
+clear.addEventListener("click", () => {
+    display.textContent = "";
+    updateDisplayNumber();
+});
+
 let number1 = 0;
 let number2 = 0;
 let displayNumber;
