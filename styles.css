@@ -20,8 +20,11 @@ html {
 
 .display {
     height: 200px;
+    display: flex;
+    align-items: center;
     color: white;
-    font-size: 100px;
+    font-size: 80px;
+    justify-content: end;
 }
 
 .row {
