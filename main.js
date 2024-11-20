@@ -29,8 +29,8 @@ function operate(a, b, op) {
 
 function addToDisplay (str) {
     // appends number to the display
-    if (displayNumber == '') {
-        display.textContent = '';
+    if (displayNumber == "") {
+        display.textContent = "";
     }
     display.textContent = display.textContent + str;
 }
@@ -56,16 +56,33 @@ const clear = document.querySelector(".clear");
 clear.addEventListener("click", () => {
     display.textContent = "";
     updateDisplayNumber();
+    number1 = 0;
+    number2 = 0;
+    operator = "";
 });
 
+// "PLUS" button
 const plus = document.querySelector(".addition");
 plus.addEventListener("click", () => {
-    // change displayNumber from str to int
-    // store displayNumber in a var
-    // empty displayNumber var (set to empty str again)
     number1 = Number(displayNumber);
-    console.log(number1);
-    displayNumber = '';
+    displayNumber = "";
+    operator = "+";
+});
+
+// "MINUS" button
+const minus = document.querySelector(".subtract");
+minus.addEventListener("click", () => {
+    number1 = Number(displayNumber);
+    displayNumber = "";
+    operator = "-";
+});
+
+// "EQUALS" button
+const equals = document.querySelector(".equals");
+equals.addEventListener("click", () => {
+    number2 = Number(displayNumber);
+    display.textContent = operate(number1, number2, operator);
+    displayNumber = "";
 });
 
 let number1 = 0;
