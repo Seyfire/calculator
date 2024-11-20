@@ -29,6 +29,9 @@ function operate(a, b, op) {
 
 function addToDisplay (str) {
     // appends number to the display
+    if (displayNumber == '') {
+        display.textContent = '';
+    }
     display.textContent = display.textContent + str;
 }
 
@@ -53,6 +56,16 @@ const clear = document.querySelector(".clear");
 clear.addEventListener("click", () => {
     display.textContent = "";
     updateDisplayNumber();
+});
+
+const plus = document.querySelector(".addition");
+plus.addEventListener("click", () => {
+    // change displayNumber from str to int
+    // store displayNumber in a var
+    // empty displayNumber var (set to empty str again)
+    number1 = Number(displayNumber);
+    console.log(number1);
+    displayNumber = '';
 });
 
 let number1 = 0;
