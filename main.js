@@ -75,42 +75,28 @@ Array.from(nodeListNumber).map( (button) => {
 const clear = document.querySelector(".clear");
 clear.addEventListener("click", () => {
     display.textContent = "";
-    number1 = 0;
-    number2 = 0;
-    operator = "";
+    number1 = null;
+    number2 = null;
+    operator = null;
 });
 
-// "PLUS" button
-const plus = document.querySelector(".addition");
-plus.addEventListener("click", (e) => {
-    // sets the operator to the corresponding button press
-    operator = getOperator(e.target.className);
+// operator buttons
+const operators = Array.from(document.querySelectorAll(".operator"));
+operators.map( (button) => {
+    button.addEventListener("click", (e) => {
+        // sets the operator to the corresponding button press
+        operator = getOperator(e.target.id);
 
-    // performs operation if there's a value already stored
-    if (number1) {
-        number2 = getDisplayNumber();
-        refreshDisplay(operate(number1, number2, operator));
-    }
+        // performs operation if there's a value already stored
+        if (number1) {
+            number2 = getDisplayNumber();
+            refreshDisplay(operate(number1, number2, operator));
+        }
 
-    number1 = getDisplayNumber();
+        number1 = getDisplayNumber();
 
-    // reset button input to a fresh state
-    isNewInput = true;
-});
-
-// "MINUS" button
-const minus = document.querySelector(".subtract");
-minus.addEventListener("click", (e) => {
-    operator = e.target.textContent;
-
-    if (number1) {
-        number2 = getDisplayNumber();
-        refreshDisplay(operate(number1, number2, operator));
-    }   
-
-    number1 = getDisplayNumber();
-
-    isNewInput = true;
+        // reset button input to a fresh state
+        isNewInput = true;});
 });
 
 // "EQUALS" button
@@ -118,9 +104,9 @@ const equals = document.querySelector(".equals");
 equals.addEventListener("click", () => {
     number2 = getDisplayNumber();
     refreshDisplay(operate(number1, number2, operator));
-    number1 = null;
-    number2 = null
     isNewInput = true;
+    number1 = null;
+    number2 = null;
 });
 
 let number1 = null;
