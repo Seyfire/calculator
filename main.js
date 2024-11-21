@@ -47,6 +47,20 @@ function getDisplayNumber () {
     return Number(display.textContent);
 }
 
+function getOperator (str) {
+    // returns operator symbol based on passed str
+    switch (str) {
+        case "addition":
+            return "+";
+        case "subtract":
+            return "-";
+        case "multiply":
+            return "*";
+        case "divide":
+            return "/";
+    }
+}
+
 let display = document.querySelector(".display");
 
 // create eventListeners for the NUMBER buttons
@@ -70,7 +84,6 @@ clear.addEventListener("click", () => {
 const plus = document.querySelector(".addition");
 plus.addEventListener("click", (e) => {
     // sets the operator to the corresponding button press
-    console.log(e.target.className);
     operator = getOperator(e.target.className);
 
     // performs operation if there's a value already stored
