@@ -78,6 +78,7 @@ clear.addEventListener("click", () => {
     number1 = null;
     number2 = null;
     operator = null;
+    previousCalc = null;
 });
 
 // operator buttons
@@ -96,14 +97,21 @@ operators.map( (button) => {
         number1 = getDisplayNumber();
 
         // reset button input to a fresh state
-        isNewInput = true;});
+        isNewInput = true;
+        previousCalc = null;
+
+    });
 });
 
 // "EQUALS" button
 const equals = document.querySelector(".equals");
 equals.addEventListener("click", () => {
-    number2 = getDisplayNumber();
-    refreshDisplay(operate(number1, number2, operator));
+    if (previousCalc) {
+        refreshDisplay(operate(getDisplayNumber(), previousCalc, operator));
+    } else {
+        previousCalc = getDisplayNumber();
+        refreshDisplay(operate(number1, getDisplayNumber(), operator));
+    }
     isNewInput = true;
     number1 = null;
     number2 = null;
@@ -112,4 +120,5 @@ equals.addEventListener("click", () => {
 let number1 = null;
 let number2 = null;
 let isNewInput = true;
+let previousCalc = null;
 let operator;
