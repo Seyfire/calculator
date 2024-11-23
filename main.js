@@ -11,6 +11,11 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+    if (b == 0) {
+        alert("DUMMY ALERT: Undefined!");
+        return 0;
+    }
+
     return a / b;
 }
 
