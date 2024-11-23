@@ -29,17 +29,32 @@ function operate(a, b, op) {
 
 function addToDisplay (buttonNumber) {
     // populates the calculator display when number buttons are pressed
+    
+    // clears the input field if needed
     if (isNewInput) {
         display.textContent = "";
         isNewInput = false;
     }
 
-    refreshDisplay(display.textContent + buttonNumber);
+    // prevents input of numbers greater than 9 digits
+    if (display.textContent.length < 9) {
+        refreshDisplay(Number(display.textContent + buttonNumber));
+    }
+
 }
 
 function refreshDisplay (num) {
     // refreshes the calculator display with the passed number
-    display.textContent = num;
+
+    // round to 8th digit, if num is a float
+    if (!Number.isInteger(num)) {
+        display.textContent = parseFloat(num.toFixed(8));
+    } else if (num > 999999999) {
+        // display numbers bigger than 9 digits as exponential notation
+        display.textContent = num.toExponential(4);
+    } else {
+        display.textContent = num;
+    }
 }
 
 function getDisplayNumber () {
@@ -68,6 +83,7 @@ const nodeListNumber = document.querySelectorAll(".number");
 Array.from(nodeListNumber).map( (button) => {
     button.addEventListener("click", () => {
         addToDisplay(button.textContent); 
+        previousCalc = null;
     });
 });
 
@@ -75,8 +91,7 @@ Array.from(nodeListNumber).map( (button) => {
 const clear = document.querySelector(".clear");
 clear.addEventListener("click", () => {
     display.textContent = "";
-    number1 = null;
-    number2 = null;
+    workingNum = null;
     operator = null;
     previousCalc = null;
 });
@@ -89,12 +104,11 @@ operators.map( (button) => {
         operator = getOperator(e.target.id);
 
         // performs operation if there's a value already stored
-        if (number1) {
-            number2 = getDisplayNumber();
-            refreshDisplay(operate(number1, number2, operator));
+        if (workingNum) {
+            refreshDisplay(operate(workingNum, getDisplayNumber(), operator));
         }
 
-        number1 = getDisplayNumber();
+        workingNum = getDisplayNumber();
 
         // reset button input to a fresh state
         isNewInput = true;
@@ -106,19 +120,19 @@ operators.map( (button) => {
 // "EQUALS" button
 const equals = document.querySelector(".equals");
 equals.addEventListener("click", () => {
+
     if (previousCalc) {
         refreshDisplay(operate(getDisplayNumber(), previousCalc, operator));
-    } else {
+    } else if (workingNum) {
         previousCalc = getDisplayNumber();
-        refreshDisplay(operate(number1, getDisplayNumber(), operator));
+        refreshDisplay(operate(workingNum, getDisplayNumber(), operator));
+        workingNum = null;
     }
+
     isNewInput = true;
-    number1 = null;
-    number2 = null;
 });
 
-let number1 = null;
-let number2 = null;
+let workingNum = null;
 let isNewInput = true;
 let previousCalc = null;
 let operator;
