@@ -78,7 +78,7 @@ function getOperator (str) {
 
 let display = document.querySelector(".display");
 
-// create eventListeners for the NUMBER buttons
+// NUMBER buttons
 const nodeListNumber = document.querySelectorAll(".number");
 Array.from(nodeListNumber).map( (button) => {
     button.addEventListener("click", () => {
@@ -87,16 +87,17 @@ Array.from(nodeListNumber).map( (button) => {
     });
 });
 
-// eventListeners for the CLEAR button
+// CLEAR button
 const clear = document.querySelector(".clear");
 clear.addEventListener("click", () => {
+    // clears the input field & returns variables to initial state
     display.textContent = "";
     workingNum = null;
     operator = null;
     previousCalc = null;
 });
 
-// operator buttons
+// OPERATION buttons (+, -, *, /)
 const operators = Array.from(document.querySelectorAll(".operator"));
 operators.map( (button) => {
     button.addEventListener("click", (e) => {
@@ -121,8 +122,10 @@ operators.map( (button) => {
 const equals = document.querySelector(".equals");
 equals.addEventListener("click", () => {
 
+    // repeat previous operation, if button is pressed repeatedly
     if (previousCalc) {
         refreshDisplay(operate(getDisplayNumber(), previousCalc, operator));
+    // otherwise, perform the operation as normal
     } else if (workingNum) {
         previousCalc = getDisplayNumber();
         refreshDisplay(operate(workingNum, getDisplayNumber(), operator));
